@@ -121,18 +121,20 @@ function updateBouquetPreview(flowerColor) {
 
 function drawBouquet(flowerColor) {
     const flowersGroup = document.getElementById('flowersGroup');
-    const vaseRect = document.getElementById('vaseRect');
+    const vaseGroup = document.getElementById('vaseGroup');
     
-    // Clear previous flowers
+    // Clear previous elements
     flowersGroup.innerHTML = '';
+    vaseGroup.innerHTML = '';
 
-    // Get vase color
+    // Get vase color and type
     const vase = vaseData[appState.selectedVase];
     const arrangement = appState.selectedArrangement;
     const color = flowerColor;
 
-    // Update vase color
-    vaseRect.setAttribute('fill', vase.color);
+    // Create and add vase SVG
+    const vaseElement = createVaseElement(appState.selectedVase, vase.color);
+    vaseGroup.appendChild(vaseElement);
 
     // Generate flower positions based on arrangement
     const positions = generateFlowerPositions(arrangement);
@@ -141,11 +143,220 @@ function drawBouquet(flowerColor) {
     positions.forEach((pos, index) => {
         const selectedFlowerIndex = index % appState.selectedFlowers.length;
         const flowerType = appState.selectedFlowers[selectedFlowerIndex];
-        const flowerData = flowerData[flowerType];
+        const flowerInfo = flowerData[flowerType];
         
-        const flowerElement = createFlowerElement(pos.x, pos.y, color || flowerData.color, pos.size || 20);
+        const flowerElement = createFlowerElement(pos.x, pos.y, color || flowerInfo.color, pos.size || 25, flowerType);
         flowersGroup.appendChild(flowerElement);
     });
+}
+
+function createVaseElement(vaseType, color) {
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    
+    switch (vaseType) {
+        case 'classic':
+            // Classic ceramic vase - curved pottery shape
+            const classicPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            classicPath.setAttribute('d', 'M 150 430 Q 135 410 135 380 L 135 320 Q 135 290 155 280 L 245 280 Q 265 290 265 320 L 265 380 Q 265 410 250 430');
+            classicPath.setAttribute('fill', color);
+            classicPath.setAttribute('stroke', '#8b6f47');
+            classicPath.setAttribute('stroke-width', '2');
+            
+            const classicRim = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            classicRim.setAttribute('cx', '200');
+            classicRim.setAttribute('cy', '280');
+            classicRim.setAttribute('rx', '55');
+            classicRim.setAttribute('ry', '15');
+            classicRim.setAttribute('fill', '#c9956f');
+            classicRim.setAttribute('stroke', '#8b6f47');
+            classicRim.setAttribute('stroke-width', '1.5');
+            
+            group.appendChild(classicPath);
+            group.appendChild(classicRim);
+            break;
+
+        case 'modern':
+            // Modern minimalist - rectangular shape
+            const modernRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            modernRect.setAttribute('x', '160');
+            modernRect.setAttribute('y', '290');
+            modernRect.setAttribute('width', '80');
+            modernRect.setAttribute('height', '140');
+            modernRect.setAttribute('fill', color);
+            modernRect.setAttribute('stroke', '#999');
+            modernRect.setAttribute('stroke-width', '2');
+            modernRect.setAttribute('rx', '4');
+            
+            const modernRim = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            modernRim.setAttribute('x', '156');
+            modernRim.setAttribute('y', '285');
+            modernRim.setAttribute('width', '88');
+            modernRim.setAttribute('height', '10');
+            modernRim.setAttribute('fill', '#d0d0d0');
+            modernRim.setAttribute('stroke', '#999');
+            modernRim.setAttribute('stroke-width', '1.5');
+            modernRim.setAttribute('rx', '2');
+            
+            group.appendChild(modernRect);
+            group.appendChild(modernRim);
+            break;
+
+        case 'rustic':
+            // Rustic glass - curved shape with transparency
+            const rusticPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            rusticPath.setAttribute('d', 'M 142 430 Q 125 410 125 375 L 125 320 Q 128 295 160 285 L 240 285 Q 272 295 275 320 L 275 375 Q 275 410 258 430');
+            rusticPath.setAttribute('fill', color);
+            rusticPath.setAttribute('stroke', '#4a90a4');
+            rusticPath.setAttribute('stroke-width', '2');
+            rusticPath.setAttribute('opacity', '0.8');
+            
+            const rusticHighlight = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            rusticHighlight.setAttribute('cx', '160');
+            rusticHighlight.setAttribute('cy', '360');
+            rusticHighlight.setAttribute('rx', '15');
+            rusticHighlight.setAttribute('ry', '40');
+            rusticHighlight.setAttribute('fill', '#ffffff');
+            rusticHighlight.setAttribute('opacity', '0.3');
+            
+            const rusticRim = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            rusticRim.setAttribute('cx', '200');
+            rusticRim.setAttribute('cy', '285');
+            rusticRim.setAttribute('rx', '50');
+            rusticRim.setAttribute('ry', '15');
+            rusticRim.setAttribute('fill', '#8cc5d4');
+            rusticRim.setAttribute('stroke', '#4a90a4');
+            rusticRim.setAttribute('stroke-width', '1.5');
+            rusticRim.setAttribute('opacity', '0.9');
+            
+            group.appendChild(rusticPath);
+            group.appendChild(rusticHighlight);
+            group.appendChild(rusticRim);
+            break;
+
+        case 'crystal':
+            // Crystal vase - faceted geometric shape
+            const crystalPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            crystalPath.setAttribute('d', 'M 155 430 L 130 385 L 110 330 L 115 280 L 155 265 L 245 265 L 285 280 L 290 330 L 270 385 L 245 430');
+            crystalPath.setAttribute('fill', color);
+            crystalPath.setAttribute('stroke', '#b884d4');
+            crystalPath.setAttribute('stroke-width', '2');
+            
+            const leftFacet = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            leftFacet.setAttribute('d', 'M 130 385 L 115 330 L 145 350 L 155 385');
+            leftFacet.setAttribute('fill', '#ffffff');
+            leftFacet.setAttribute('opacity', '0.4');
+            
+            const rightFacet = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            rightFacet.setAttribute('d', 'M 270 385 L 290 330 L 255 350 L 245 385');
+            rightFacet.setAttribute('fill', '#ffffff');
+            rightFacet.setAttribute('opacity', '0.4');
+            
+            const crystalRim = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            crystalRim.setAttribute('cx', '200');
+            crystalRim.setAttribute('cy', '265');
+            crystalRim.setAttribute('rx', '50');
+            crystalRim.setAttribute('ry', '12');
+            crystalRim.setAttribute('fill', '#d9b8e8');
+            crystalRim.setAttribute('stroke', '#b884d4');
+            crystalRim.setAttribute('stroke-width', '1.5');
+            
+            group.appendChild(crystalPath);
+            group.appendChild(leftFacet);
+            group.appendChild(rightFacet);
+            group.appendChild(crystalRim);
+            break;
+
+        case 'vintage':
+            // Vintage pitcher - with handle
+            const vintageBody = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            vintageBody.setAttribute('d', 'M 142 430 Q 132 410 128 375 L 128 320 Q 128 295 155 280 L 245 280 Q 272 295 272 320 L 272 375 Q 268 410 258 430 Z');
+            vintageBody.setAttribute('fill', color);
+            vintageBody.setAttribute('stroke', '#b8860b');
+            vintageBody.setAttribute('stroke-width', '2');
+            
+            const vintageHandle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            vintageHandle.setAttribute('d', 'M 272 340 Q 305 360 305 385 Q 305 395 290 400');
+            vintageHandle.setAttribute('fill', 'none');
+            vintageHandle.setAttribute('stroke', color);
+            vintageHandle.setAttribute('stroke-width', '6');
+            vintageHandle.setAttribute('stroke-linecap', 'round');
+            
+            const vintageRim = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            vintageRim.setAttribute('cx', '200');
+            vintageRim.setAttribute('cy', '280');
+            vintageRim.setAttribute('rx', '50');
+            vintageRim.setAttribute('ry', '12');
+            vintageRim.setAttribute('fill', '#d4a574');
+            vintageRim.setAttribute('stroke', '#b8860b');
+            vintageRim.setAttribute('stroke-width', '2');
+            
+            const vintageDecor = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            vintageDecor.setAttribute('cx', '200');
+            vintageDecor.setAttribute('cy', '330');
+            vintageDecor.setAttribute('rx', '65');
+            vintageDecor.setAttribute('ry', '6');
+            vintageDecor.setAttribute('fill', 'none');
+            vintageDecor.setAttribute('stroke', '#b8860b');
+            vintageDecor.setAttribute('stroke-width', '1');
+            vintageDecor.setAttribute('opacity', '0.5');
+            
+            group.appendChild(vintageBody);
+            group.appendChild(vintageHandle);
+            group.appendChild(vintageRim);
+            group.appendChild(vintageDecor);
+            break;
+
+        case 'contemporary':
+            // Contemporary tall - cylindrical shape
+            const contempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            contempPath.setAttribute('d', 'M 165 430 Q 155 400 155 360 L 158 305 Q 158 280 200 270 Q 242 280 242 305 L 245 360 Q 245 400 235 430');
+            contempPath.setAttribute('fill', color);
+            contempPath.setAttribute('stroke', '#5f9ea0');
+            contempPath.setAttribute('stroke-width', '2');
+            
+            const contempHighlight = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            contempHighlight.setAttribute('cx', '170');
+            contempHighlight.setAttribute('cy', '350');
+            contempHighlight.setAttribute('rx', '12');
+            contempHighlight.setAttribute('ry', '50');
+            contempHighlight.setAttribute('fill', '#ffffff');
+            contempHighlight.setAttribute('opacity', '0.3');
+            
+            const contempRim = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            contempRim.setAttribute('cx', '200');
+            contempRim.setAttribute('cy', '270');
+            contempRim.setAttribute('rx', '55');
+            contempRim.setAttribute('ry', '12');
+            contempRim.setAttribute('fill', '#7ecdd6');
+            contempRim.setAttribute('stroke', '#5f9ea0');
+            contempRim.setAttribute('stroke-width', '2');
+            
+            const contempBottom = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            contempBottom.setAttribute('cx', '200');
+            contempBottom.setAttribute('cy', '430');
+            contempBottom.setAttribute('rx', '60');
+            contempBottom.setAttribute('ry', '8');
+            contempBottom.setAttribute('fill', '#5f9ea0');
+            contempBottom.setAttribute('opacity', '0.3');
+            
+            group.appendChild(contempPath);
+            group.appendChild(contempHighlight);
+            group.appendChild(contempRim);
+            group.appendChild(contempBottom);
+            break;
+
+        default:
+            // Fallback to classic
+            const fallbackPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            fallbackPath.setAttribute('d', 'M 150 430 Q 135 410 135 380 L 135 320 Q 135 290 155 280 L 245 280 Q 265 290 265 320 L 265 380 Q 265 410 250 430');
+            fallbackPath.setAttribute('fill', color);
+            fallbackPath.setAttribute('stroke', '#999');
+            fallbackPath.setAttribute('stroke-width', '2');
+            group.appendChild(fallbackPath);
+            break;
+    }
+    
+    return group;
 }
 
 function generateFlowerPositions(arrangement) {
@@ -160,7 +371,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + Math.cos(angle) * radius,
                     y: 250 + Math.sin(angle) * radius * 0.8,
-                    size: 15 + (i / 15) * 10
+                    size: 25 + (i / 15) * 15
                 });
             }
             break;
@@ -171,7 +382,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 180 + Math.random() * 40,
                     y: 200 + Math.random() * 120,
-                    size: 18
+                    size: 28
                 });
             }
             break;
@@ -185,7 +396,7 @@ function generateFlowerPositions(arrangement) {
                     positions.push({
                         x: 200 + (i - count / 2) * 40,
                         y: layerY,
-                        size: 20 - (layer * 2)
+                        size: 28 - (layer * 2)
                     });
                 }
             }
@@ -198,7 +409,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + side * (30 + Math.random() * 60),
                     y: 200 + Math.random() * 140,
-                    size: 16 + Math.random() * 8
+                    size: 26 + Math.random() * 8
                 });
             }
             break;
@@ -212,7 +423,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + Math.cos(angle) * radius,
                     y: 220 + Math.sin(angle) * radius + yOffset,
-                    size: 16
+                    size: 26
                 });
             }
             break;
@@ -225,7 +436,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + Math.cos(angle) * radius,
                     y: 250 + Math.sin(angle) * radius * 0.8,
-                    size: 15 + (i / 15) * 10
+                    size: 25 + (i / 15) * 15
                 });
             }
     }
@@ -233,36 +444,335 @@ function generateFlowerPositions(arrangement) {
     return positions;
 }
 
-function createFlowerElement(x, y, color, size) {
+function createFlowerElement(x, y, color, size, flowerType) {
     const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     group.setAttribute('transform', `translate(${x},${y})`);
 
-    // Create flower petals (simplified flower shape)
-    for (let i = 0; i < 5; i++) {
-        const angle = (i / 5) * Math.PI * 2;
-        const petalX = Math.cos(angle) * size * 0.6;
-        const petalY = Math.sin(angle) * size * 0.6;
-
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('cx', petalX);
-        circle.setAttribute('cy', petalY);
-        circle.setAttribute('r', size * 0.4);
-        circle.setAttribute('fill', color);
-        circle.setAttribute('opacity', '0.8');
-
-        group.appendChild(circle);
+    switch (flowerType) {
+        case 'rose':
+            createRose(group, color, size);
+            break;
+        case 'tulip':
+            createTulip(group, color, size);
+            break;
+        case 'sunflower':
+            createSunflower(group, color, size);
+            break;
+        case 'daisy':
+            createDaisy(group, color, size);
+            break;
+        case 'lily':
+            createLily(group, color, size);
+            break;
+        case 'orchid':
+            createOrchid(group, color, size);
+            break;
+        default:
+            createRose(group, color, size);
     }
 
-    // Create flower center
+    return group;
+}
+
+function createRose(group, color, size) {
+    // Rose with layered petals
+    const centerSize = size * 0.3;
+    
+    // Outer petals (8 petals)
+    for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * Math.PI * 2;
+        const petalX = Math.cos(angle) * size * 0.7;
+        const petalY = Math.sin(angle) * size * 0.7;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', petalX);
+        petal.setAttribute('cy', petalY);
+        petal.setAttribute('rx', size * 0.35);
+        petal.setAttribute('ry', size * 0.45);
+        petal.setAttribute('fill', color);
+        petal.setAttribute('opacity', '0.7');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
+        group.appendChild(petal);
+    }
+
+    // Middle petals (6 petals, slightly smaller)
+    for (let i = 0; i < 6; i++) {
+        const angle = (i / 6) * Math.PI * 2 + Math.PI / 12;
+        const petalX = Math.cos(angle) * size * 0.45;
+        const petalY = Math.sin(angle) * size * 0.45;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', petalX);
+        petal.setAttribute('cy', petalY);
+        petal.setAttribute('rx', size * 0.25);
+        petal.setAttribute('ry', size * 0.35);
+        petal.setAttribute('fill', color);
+        petal.setAttribute('opacity', '0.85');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
+        group.appendChild(petal);
+    }
+
+    // Inner petals (4 petals, darker)
+    const darkerColor = shadeColor(color, -20);
+    for (let i = 0; i < 4; i++) {
+        const angle = (i / 4) * Math.PI * 2;
+        const petalX = Math.cos(angle) * size * 0.25;
+        const petalY = Math.sin(angle) * size * 0.25;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', petalX);
+        petal.setAttribute('cy', petalY);
+        petal.setAttribute('rx', size * 0.15);
+        petal.setAttribute('ry', size * 0.25);
+        petal.setAttribute('fill', darkerColor);
+        petal.setAttribute('opacity', '1');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
+        group.appendChild(petal);
+    }
+
+    // Center
     const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     center.setAttribute('cx', '0');
     center.setAttribute('cy', '0');
-    center.setAttribute('r', size * 0.2);
-    center.setAttribute('fill', '#FFD700');
-
+    center.setAttribute('r', size * 0.12);
+    center.setAttribute('fill', shadeColor(color, -40));
     group.appendChild(center);
+}
 
-    return group;
+function createSunflower(group, color, size) {
+    // Sunflower with many petals radiating from center
+    const petalCount = 24;
+    
+    // Yellow/golden petals
+    for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2;
+        const petalX = Math.cos(angle) * size * 0.6;
+        const petalY = Math.sin(angle) * size * 0.6;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', petalX);
+        petal.setAttribute('cy', petalY);
+        petal.setAttribute('rx', size * 0.25);
+        petal.setAttribute('ry', size * 0.4);
+        petal.setAttribute('fill', color);
+        petal.setAttribute('opacity', '0.9');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
+        group.appendChild(petal);
+    }
+
+    // Dark center circle with pattern
+    const centerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    centerCircle.setAttribute('cx', '0');
+    centerCircle.setAttribute('cy', '0');
+    centerCircle.setAttribute('r', size * 0.35);
+    centerCircle.setAttribute('fill', '#8B4513');
+    group.appendChild(centerCircle);
+
+    // Add seed pattern to center
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            const seedX = (i - 3.5) * size * 0.08;
+            const seedY = (j - 3.5) * size * 0.08;
+            const seed = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            seed.setAttribute('cx', seedX);
+            seed.setAttribute('cy', seedY);
+            seed.setAttribute('r', size * 0.04);
+            seed.setAttribute('fill', '#654321');
+            group.appendChild(seed);
+        }
+    }
+}
+
+function createTulip(group, color, size) {
+    // Tulip with 6 petals forming a cup shape
+    const petalCount = 6;
+    
+    for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2;
+        const controlAngle = angle + Math.PI / petalCount;
+        
+        const petalX = Math.cos(angle) * size * 0.5;
+        const petalY = Math.sin(angle) * size * 0.5 - size * 0.3;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        petal.setAttribute('d', `M 0 ${-size * 0.6} Q ${Math.cos(controlAngle) * size * 0.4} ${-size * 0.2} ${petalX} ${petalY}`);
+        petal.setAttribute('stroke', color);
+        petal.setAttribute('stroke-width', size * 0.35);
+        petal.setAttribute('stroke-linecap', 'round');
+        petal.setAttribute('fill', 'none');
+        group.appendChild(petal);
+    }
+
+    // Inner petals (lighter)
+    for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2 + Math.PI / petalCount;
+        const lightColor = shadeColor(color, 20);
+        
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        petal.setAttribute('d', `M 0 ${-size * 0.55} Q ${Math.cos(angle) * size * 0.2} ${-size * 0.25} ${Math.cos(angle) * size * 0.3} ${-size * 0.1}`);
+        petal.setAttribute('stroke', lightColor);
+        petal.setAttribute('stroke-width', size * 0.2);
+        petal.setAttribute('stroke-linecap', 'round');
+        petal.setAttribute('fill', 'none');
+        group.appendChild(petal);
+    }
+
+    // Center
+    const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    center.setAttribute('cx', '0');
+    center.setAttribute('cy', '0');
+    center.setAttribute('r', size * 0.15);
+    center.setAttribute('fill', '#FFD700');
+    group.appendChild(center);
+}
+
+function createDaisy(group, color, size) {
+    // Daisy with simple white petals and yellow center
+    const petalCount = 16;
+    
+    // White petals
+    for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2;
+        const petalX = Math.cos(angle) * size * 0.6;
+        const petalY = Math.sin(angle) * size * 0.6;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', petalX);
+        petal.setAttribute('cy', petalY);
+        petal.setAttribute('rx', size * 0.2);
+        petal.setAttribute('ry', size * 0.38);
+        petal.setAttribute('fill', color);
+        petal.setAttribute('opacity', '0.9');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
+        group.appendChild(petal);
+    }
+
+    // Yellow center
+    const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    center.setAttribute('cx', '0');
+    center.setAttribute('cy', '0');
+    center.setAttribute('r', size * 0.28);
+    center.setAttribute('fill', '#FFD700');
+    group.appendChild(center);
+}
+
+function createLily(group, color, size) {
+    // Lily with 6 large petals and prominent stamens
+    const petalCount = 6;
+    
+    // Petals
+    for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2;
+        const petalX = Math.cos(angle) * size * 0.5;
+        const petalY = Math.sin(angle) * size * 0.5;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        petal.setAttribute('d', `M 0 ${-size * 0.7} Q ${Math.cos(angle) * size * 0.3} ${-size * 0.3} ${petalX} ${petalY}`);
+        petal.setAttribute('fill', color);
+        petal.setAttribute('opacity', '0.85');
+        petal.setAttribute('stroke', shadeColor(color, -15));
+        petal.setAttribute('stroke-width', '0.5');
+        group.appendChild(petal);
+    }
+
+    // Stamens
+    for (let i = 0; i < 6; i++) {
+        const angle = (i / 6) * Math.PI * 2 + Math.PI / 12;
+        const stamenX = Math.cos(angle) * size * 0.25;
+        const stamenY = Math.sin(angle) * size * 0.25;
+
+        const stamen = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        stamen.setAttribute('x1', '0');
+        stamen.setAttribute('y1', '0');
+        stamen.setAttribute('x2', stamenX);
+        stamen.setAttribute('y2', stamenY);
+        stamen.setAttribute('stroke', '#FF6B00');
+        stamen.setAttribute('stroke-width', size * 0.06);
+        group.appendChild(stamen);
+
+        const anther = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        anther.setAttribute('cx', stamenX);
+        anther.setAttribute('cy', stamenY);
+        anther.setAttribute('r', size * 0.08);
+        anther.setAttribute('fill', '#FF8C00');
+        group.appendChild(anther);
+    }
+
+    // Center
+    const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    center.setAttribute('cx', '0');
+    center.setAttribute('cy', '0');
+    center.setAttribute('r', size * 0.12);
+    center.setAttribute('fill', '#FFD700');
+    group.appendChild(center);
+}
+
+function createOrchid(group, color, size) {
+    // Orchid with unique petal arrangement
+    const mainColor = color;
+    const accentColor = shadeColor(color, 30);
+    
+    // Top sepal
+    const topSepal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    topSepal.setAttribute('cx', '0');
+    topSepal.setAttribute('cy', -size * 0.55);
+    topSepal.setAttribute('rx', size * 0.22);
+    topSepal.setAttribute('ry', size * 0.45);
+    topSepal.setAttribute('fill', mainColor);
+    group.appendChild(topSepal);
+
+    // Side petals (2)
+    for (let i = 0; i < 2; i++) {
+        const angle = i === 0 ? -Math.PI / 2.5 : Math.PI / 2.5;
+        const petalX = Math.cos(angle) * size * 0.5;
+        const petalY = Math.sin(angle) * size * 0.35;
+
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', petalX);
+        petal.setAttribute('cy', petalY);
+        petal.setAttribute('rx', size * 0.28);
+        petal.setAttribute('ry', size * 0.38);
+        petal.setAttribute('fill', mainColor);
+        petal.setAttribute('opacity', '0.9');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
+        group.appendChild(petal);
+    }
+
+    // Lip (labellum) - distinctive orchid feature
+    const lip = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    lip.setAttribute('d', `M ${-size * 0.25} ${size * 0.3} Q 0 ${size * 0.55} ${size * 0.25} ${size * 0.3} Q ${size * 0.15} ${size * 0.4} 0 ${size * 0.35} Q ${-size * 0.15} ${size * 0.4} ${-size * 0.25} ${size * 0.3}`);
+    lip.setAttribute('fill', accentColor);
+    lip.setAttribute('opacity', '0.95');
+    group.appendChild(lip);
+
+    // Center detail
+    const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    center.setAttribute('cx', '0');
+    center.setAttribute('cy', '0');
+    center.setAttribute('r', size * 0.1);
+    center.setAttribute('fill', '#FFD700');
+    group.appendChild(center);
+}
+
+function shadeColor(color, percent) {
+    // Convert hex color and lighten/darken it
+    let R = parseInt(color.substring(1,3), 16);
+    let G = parseInt(color.substring(3,5), 16);
+    let B = parseInt(color.substring(5,7), 16);
+
+    R = parseInt(R * (100 + percent) / 100);
+    G = parseInt(G * (100 + percent) / 100);
+    B = parseInt(B * (100 + percent) / 100);
+
+    R = (R<255)?R:255;
+    G = (G<255)?G:255;
+    B = (B<255)?B:255;
+
+    const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+    const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+    const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+
+    return "#"+RR+GG+BB;
 }
 
 /* ======================== */

@@ -309,8 +309,41 @@
                         <div class="card-preview" id="cardPreview">
                             <div class="bouquet-display" id="bouquetDisplay">
                                 <svg id="bouquetSVG" viewBox="0 0 400 500" style="width: 100%; height: 100%;">
+                                    <defs>
+                                        <linearGradient id="classicVaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#d4a574;stop-opacity:0.8" />
+                                            <stop offset="50%" style="stop-color:#d4a574;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#a0826d;stop-opacity:0.8" />
+                                        </linearGradient>
+                                        <linearGradient id="modernVaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.6" />
+                                            <stop offset="50%" style="stop-color:#f5f5f5;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:0.6" />
+                                        </linearGradient>
+                                        <linearGradient id="rusticVaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#b3d9e6;stop-opacity:0.4" />
+                                            <stop offset="50%" style="stop-color:#7ec5db;stop-opacity:0.6" />
+                                            <stop offset="100%" style="stop-color:#5eadb3;stop-opacity:0.4" />
+                                        </linearGradient>
+                                        <linearGradient id="crystalVaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#e8d5f2;stop-opacity:0.5" />
+                                            <stop offset="50%" style="stop-color:#d5c5f0;stop-opacity:0.8" />
+                                            <stop offset="100%" style="stop-color:#c9a2e0;stop-opacity:0.5" />
+                                        </linearGradient>
+                                        <linearGradient id="vintageVaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#f5e6d3;stop-opacity:0.8" />
+                                            <stop offset="50%" style="stop-color:#f0d9be;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#e8c9a8;stop-opacity:0.8" />
+                                        </linearGradient>
+                                        <linearGradient id="contemporaryVaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#c5e9f0;stop-opacity:0.6" />
+                                            <stop offset="50%" style="stop-color:#8dd9e6;stop-opacity:0.9" />
+                                            <stop offset="100%" style="stop-color:#5fc5d4;stop-opacity:0.6" />
+                                        </linearGradient>
+                                    </defs>
+                                    
                                     <!-- Vase will be drawn here -->
-                                    <rect id="vaseRect" x="150" y="350" width="100" height="80" fill="#d4a574" rx="10"/>
+                                    <g id="vaseGroup"></g>
                                     
                                     <!-- Flowers will be drawn here -->
                                     <g id="flowersGroup"></g>
