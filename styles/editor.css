@@ -1,0 +1,334 @@
+/* ======================== */
+/* EDITOR PAGE LAYOUT */
+/* ======================== */
+
+.editor-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* ======================== */
+/* PREVIEW SECTION */
+/* ======================== */
+
+.editor-preview {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.card-preview {
+    background: linear-gradient(135deg, #fff5f5 0%, #fff0f0 100%);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.15);
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 2/3;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-preview.design-floral {
+    background: linear-gradient(135deg, #fff5ee 0%, #ffefd5 100%);
+}
+
+.card-preview.design-pastel {
+    background: linear-gradient(135deg, #e6f3ff 0%, #ffe6f0 100%);
+}
+
+.card-preview.design-softpink {
+    background: linear-gradient(135deg, #ffc0cb 0%, #ffb6d9 100%);
+}
+
+.card-preview.design-lavender {
+    background: linear-gradient(135deg, #e6d5f5 0%, #f0e6ff 100%);
+}
+
+.card-preview.design-mint {
+    background: linear-gradient(135deg, #e0f5f5 0%, #d5f5f0 100%);
+}
+
+.card-preview.design-cream {
+    background: linear-gradient(135deg, #faf8f3 0%, #f5f1e8 100%);
+}
+
+/* ======================== */
+/* BOUQUET DISPLAY */
+/* ======================== */
+
+.bouquet-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    min-height: 250px;
+}
+
+#bouquetSVG {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* ======================== */
+/* PREVIEW TEXT AREA */
+/* ======================== */
+
+.preview-text-area {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.preview-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.preview-message {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+    min-height: 2.5rem;
+}
+
+.preview-signature {
+    font-size: 0.85rem;
+    color: #777;
+    font-style: italic;
+}
+
+/* ======================== */
+/* EDITOR CONTROLS */
+/* ======================== */
+
+.editor-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-weight: bold;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.input-field,
+.color-input {
+    padding: 0.7rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus,
+.color-input:focus {
+    outline: none;
+    border-color: #ff69b4;
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+}
+
+.textarea-field {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.color-input {
+    cursor: pointer;
+    height: 50px;
+}
+
+/* ======================== */
+/* SLIDER STYLES */
+/* ======================== */
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #ddd 0%, #ff69b4 100%);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+    border: none;
+}
+
+#fontSizeValue {
+    min-width: 50px;
+    text-align: right;
+    font-weight: bold;
+    color: #ff69b4;
+}
+
+/* ======================== */
+/* BUTTON STYLES */
+/* ======================== */
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #87ceeb 0%, #4a90a4 100%);
+    color: white;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 144, 164, 0.3);
+}
+
+.btn-secondary:active {
+    transform: translateY(-1px);
+}
+
+/* ======================== */
+/* RESPONSIVE DESIGN */
+/* ======================== */
+
+@media (max-width: 1024px) {
+    .editor-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .card-preview {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .editor-controls {
+        gap: 1rem;
+    }
+
+    .button-group {
+        gap: 0.5rem;
+    }
+
+    .btn {
+        min-width: 120px;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .card-preview {
+        max-width: 300px;
+        aspect-ratio: 3/4;
+    }
+
+    .preview-title {
+        font-size: 1.2rem;
+    }
+
+    .preview-message {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .editor-container {
+        gap: 1rem;
+    }
+
+    .card-preview {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .input-field,
+    .color-input {
+        font-size: 0.9rem;
+    }
+
+    .preview-title {
+        font-size: 1.1rem;
+    }
+
+    .preview-message {
+        font-size: 0.8rem;
+    }
+}

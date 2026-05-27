@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Your Own Bouquet - Create Beautiful Flower Arrangements</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/flowers.css">
+    <link rel="stylesheet" href="../styles/editor.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">🌹 Make Your Own Bouquet</h1>
+                <p class="app-subtitle">Create and share beautiful flower arrangements</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page 1: Flower Selection -->
+            <section id="flowerPage" class="page active">
+                <div class="page-header">
+                    <h2>Choose Your Flowers</h2>
+                    <p class="page-description">Select one or more flower varieties to get started</p>
+                </div>
+
+                <div class="flowers-grid">
+                    <!-- Flower 1: Rose -->
+                    <div class="flower-card" data-flower="rose">
+                        <div class="flower-preview" style="background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);">
+                            <p class="flower-icon">🌹</p>
+                            <p class="flower-name">Rose</p>
+                            <p class="flower-desc">Classic elegance</p>
+                        </div>
+                    </div>
+
+                    <!-- Flower 2: Tulip -->
+                    <div class="flower-card" data-flower="tulip">
+                        <div class="flower-preview" style="background: linear-gradient(135deg, #fff0f5 0%, #ffe4f0 100%);">
+                            <p class="flower-icon">🌷</p>
+                            <p class="flower-name">Tulip</p>
+                            <p class="flower-desc">Spring beauty</p>
+                        </div>
+                    </div>
+
+                    <!-- Flower 3: Sunflower -->
+                    <div class="flower-card" data-flower="sunflower">
+                        <div class="flower-preview" style="background: linear-gradient(135deg, #fffaf0 0%, #fff5e1 100%);">
+                            <p class="flower-icon">🌻</p>
+                            <p class="flower-name">Sunflower</p>
+                            <p class="flower-desc">Cheerful rays</p>
+                        </div>
+                    </div>
+
+                    <!-- Flower 4: Daisy -->
+                    <div class="flower-card" data-flower="daisy">
+                        <div class="flower-preview" style="background: linear-gradient(135deg, #f5ffff 0%, #e8ffff 100%);">
+                            <p class="flower-icon">🌼</p>
+                            <p class="flower-name">Daisy</p>
+                            <p class="flower-desc">Simple charm</p>
+                        </div>
+                    </div>
+
+                    <!-- Flower 5: Lily -->
+                    <div class="flower-card" data-flower="lily">
+                        <div class="flower-preview" style="background: linear-gradient(135deg, #fff0ff 0%, #ffe0ff 100%);">
+                            <p class="flower-icon">🌸</p>
+                            <p class="flower-name">Lily</p>
+                            <p class="flower-desc">Exotic beauty</p>
+                        </div>
+                    </div>
+
+                    <!-- Flower 6: Orchid -->
+                    <div class="flower-card" data-flower="orchid">
+                        <div class="flower-preview" style="background: linear-gradient(135deg, #f5f0ff 0%, #e8d5ff 100%);">
+                            <p class="flower-icon">💜</p>
+                            <p class="flower-name">Orchid</p>
+                            <p class="flower-desc">Sophisticated</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group-page" style="text-align: center; margin-top: 3rem;">
+                    <button id="continueFromFlowerBtn" class="btn btn-primary" onclick="continueFromFlowerPage()" style="display: none; max-width: 300px; margin: 0 auto;">Continue with Selected Flowers →</button>
+                </div>
+            </section>
+
+            <!-- Page 2: Vase Selection -->
+            <section id="vasePage" class="page">
+                <div class="page-header">
+                    <button class="back-btn" onclick="goToPage('flowerPage')">← Back</button>
+                    <h2>Choose a Vase</h2>
+                    <p class="page-description">Pick a beautiful vase for your bouquet</p>
+                </div>
+
+                <div class="vases-grid">
+                    <!-- Vase 1: Classic Ceramic -->
+                    <div class="vase-card" data-vase="classic">
+                        <div class="vase-preview vase-classic">
+                            <svg viewBox="0 0 100 150" class="vase-svg">
+                                <defs>
+                                    <linearGradient id="classicGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#d4a574;stop-opacity:0.8" />
+                                        <stop offset="50%" style="stop-color:#d4a574;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#a0826d;stop-opacity:0.8" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Vase body -->
+                                <path d="M 30 120 Q 25 100 25 80 L 25 40 Q 25 20 35 15 L 65 15 Q 75 20 75 40 L 75 80 Q 75 100 70 120" fill="url(#classicGrad)" stroke="#8b6f47" stroke-width="1.5"/>
+                                <!-- Vase rim -->
+                                <ellipse cx="50" cy="15" rx="15" ry="8" fill="#c9956f" stroke="#8b6f47" stroke-width="1"/>
+                            </svg>
+                            <p class="vase-name">Classic Ceramic</p>
+                            <p class="vase-desc">Timeless elegance</p>
+                        </div>
+                    </div>
+
+                    <!-- Vase 2: Modern Minimalist -->
+                    <div class="vase-card" data-vase="modern">
+                        <div class="vase-preview vase-modern">
+                            <svg viewBox="0 0 100 150" class="vase-svg">
+                                <defs>
+                                    <linearGradient id="modernGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.6" />
+                                        <stop offset="50%" style="stop-color:#f5f5f5;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:0.6" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Vase body -->
+                                <rect x="35" y="15" width="30" height="105" fill="url(#modernGrad)" stroke="#999" stroke-width="1.5" rx="2"/>
+                                <!-- Vase rim -->
+                                <rect x="33" y="12" width="34" height="6" fill="#d0d0d0" stroke="#999" stroke-width="1" rx="1"/>
+                            </svg>
+                            <p class="vase-name">Modern Minimalist</p>
+                            <p class="vase-desc">Sleek & simple</p>
+                        </div>
+                    </div>
+
+                    <!-- Vase 3: Rustic Glass -->
+                    <div class="vase-card" data-vase="rustic">
+                        <div class="vase-preview vase-rustic">
+                            <svg viewBox="0 0 100 150" class="vase-svg">
+                                <defs>
+                                    <linearGradient id="rusticGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#b3d9e6;stop-opacity:0.4" />
+                                        <stop offset="50%" style="stop-color:#7ec5db;stop-opacity:0.6" />
+                                        <stop offset="100%" style="stop-color:#5eadb3;stop-opacity:0.4" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Vase body -->
+                                <path d="M 28 120 Q 20 100 20 75 L 20 35 Q 22 18 40 15 L 60 15 Q 78 18 80 35 L 80 75 Q 80 100 72 120" fill="url(#rusticGrad)" stroke="#4a90a4" stroke-width="1.5" opacity="0.8"/>
+                                <!-- Highlight -->
+                                <ellipse cx="35" cy="50" rx="8" ry="20" fill="#ffffff" opacity="0.3"/>
+                                <!-- Vase rim -->
+                                <ellipse cx="50" cy="15" rx="16" ry="8" fill="#8cc5d4" stroke="#4a90a4" stroke-width="1" opacity="0.9"/>
+                            </svg>
+                            <p class="vase-name">Rustic Glass</p>
+                            <p class="vase-desc">Transparent charm</p>
+                        </div>
+                    </div>
+
+                    <!-- Vase 4: Crystal Vase -->
+                    <div class="vase-card" data-vase="crystal">
+                        <div class="vase-preview vase-crystal">
+                            <svg viewBox="0 0 100 150" class="vase-svg">
+                                <defs>
+                                    <linearGradient id="crystalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#e8d5f2;stop-opacity:0.5" />
+                                        <stop offset="50%" style="stop-color:#d5c5f0;stop-opacity:0.8" />
+                                        <stop offset="100%" style="stop-color:#c9a2e0;stop-opacity:0.5" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Vase body with facets -->
+                                <path d="M 30 120 L 25 90 L 20 60 L 22 30 L 35 15 L 65 15 L 78 30 L 80 60 L 75 90 L 70 120" fill="url(#crystalGrad)" stroke="#b884d4" stroke-width="1.5"/>
+                                <!-- Left facet highlight -->
+                                <path d="M 25 90 L 22 60 L 30 70 L 32 90" fill="#ffffff" opacity="0.4"/>
+                                <!-- Right facet highlight -->
+                                <path d="M 75 90 L 80 60 L 70 70 L 68 90" fill="#ffffff" opacity="0.4"/>
+                                <!-- Vase rim -->
+                                <ellipse cx="50" cy="15" rx="16" ry="8" fill="#d9b8e8" stroke="#b884d4" stroke-width="1"/>
+                            </svg>
+                            <p class="vase-name">Crystal Vase</p>
+                            <p class="vase-desc">Sophisticated cut</p>
+                        </div>
+                    </div>
+
+                    <!-- Vase 5: Vintage Pitcher -->
+                    <div class="vase-card" data-vase="vintage">
+                        <div class="vase-preview vase-vintage">
+                            <svg viewBox="0 0 100 150" class="vase-svg">
+                                <defs>
+                                    <linearGradient id="vintageGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#f5e6d3;stop-opacity:0.8" />
+                                        <stop offset="50%" style="stop-color:#f0d9be;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#e8c9a8;stop-opacity:0.8" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Vase body -->
+                                <path d="M 28 120 Q 22 100 20 75 L 20 40 Q 20 20 35 15 L 65 15 Q 80 20 80 40 L 80 75 Q 78 100 72 120 Z" fill="url(#vintageGrad)" stroke="#b8860b" stroke-width="1.5"/>
+                                <!-- Handle -->
+                                <path d="M 80 50 Q 95 60 95 85 Q 95 90 88 92" fill="none" stroke="#d4a574" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Vase rim -->
+                                <ellipse cx="50" cy="15" rx="16" ry="7" fill="#d4a574" stroke="#b8860b" stroke-width="1.5"/>
+                                <!-- Decorative line -->
+                                <ellipse cx="50" cy="45" rx="28" ry="3" fill="none" stroke="#b8860b" stroke-width="0.5" opacity="0.5"/>
+                            </svg>
+                            <p class="vase-name">Vintage Pitcher</p>
+                            <p class="vase-desc">Antique style</p>
+                        </div>
+                    </div>
+
+                    <!-- Vase 6: Contemporary Tall -->
+                    <div class="vase-card" data-vase="contemporary">
+                        <div class="vase-preview vase-contemporary">
+                            <svg viewBox="0 0 100 150" class="vase-svg">
+                                <defs>
+                                    <linearGradient id="contemporaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#c5e9f0;stop-opacity:0.6" />
+                                        <stop offset="50%" style="stop-color:#8dd9e6;stop-opacity:0.9" />
+                                        <stop offset="100%" style="stop-color:#5fc5d4;stop-opacity:0.6" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Vase body - tall and cylindrical -->
+                                <path d="M 32 120 Q 30 95 30 70 L 32 25 Q 32 12 50 12 Q 68 12 68 25 L 70 70 Q 70 95 68 120" fill="url(#contemporaryGrad)" stroke="#5f9ea0" stroke-width="1.5"/>
+                                <!-- Highlight for dimension -->
+                                <ellipse cx="38" cy="60" rx="6" ry="25" fill="#ffffff" opacity="0.3"/>
+                                <!-- Vase rim -->
+                                <ellipse cx="50" cy="12" rx="18" ry="6" fill="#7ecdd6" stroke="#5f9ea0" stroke-width="1.5"/>
+                                <!-- Bottom curve -->
+                                <ellipse cx="50" cy="120" rx="20" ry="5" fill="#5f9ea0" opacity="0.3"/>
+                            </svg>
+                            <p class="vase-name">Contemporary Tall</p>
+                            <p class="vase-desc">Modern tall design</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Page 3: Arrangement Selection -->
+            <section id="arrangementPage" class="page">
+                <div class="page-header">
+                    <button class="back-btn" onclick="goToPage('vasePage')">← Back</button>
+                    <h2>Choose an Arrangement</h2>
+                    <p class="page-description">Select your preferred bouquet arrangement style</p>
+                </div>
+
+                <div class="arrangements-grid">
+                    <!-- Arrangement 1: Spiral -->
+                    <div class="arrangement-card" data-arrangement="spiral">
+                        <div class="arrangement-preview" style="background: linear-gradient(135deg, #fff5ee 0%, #ffe0d0 100%); border: 3px solid #ff69b4;">
+                            <span class="arrangement-icon">🌀</span>
+                            <p>Spiral</p>
+                            <p class="arrangement-desc">Flowing pattern</p>
+                        </div>
+                    </div>
+
+                    <!-- Arrangement 2: Clustered -->
+                    <div class="arrangement-card" data-arrangement="clustered">
+                        <div class="arrangement-preview" style="background: linear-gradient(135deg, #f5f0ff 0%, #e8d5ff 100%); border: 3px solid #da70d6;">
+                            <span class="arrangement-icon">🌺</span>
+                            <p>Clustered</p>
+                            <p class="arrangement-desc">Densely packed</p>
+                        </div>
+                    </div>
+
+                    <!-- Arrangement 3: Tiered -->
+                    <div class="arrangement-card" data-arrangement="tiered">
+                        <div class="arrangement-preview" style="background: linear-gradient(135deg, #fffaf0 0%, #fff8dc 100%); border: 3px solid #ffa500;">
+                            <span class="arrangement-icon">📚</span>
+                            <p>Tiered</p>
+                            <p class="arrangement-desc">Layered heights</p>
+                        </div>
+                    </div>
+
+                    <!-- Arrangement 4: Asymmetrical -->
+                    <div class="arrangement-card" data-arrangement="asymmetrical">
+                        <div class="arrangement-preview" style="background: linear-gradient(135deg, #f0ffff 0%, #e0ffff 100%); border: 3px solid #00ced1;">
+                            <span class="arrangement-icon">🎨</span>
+                            <p>Asymmetrical</p>
+                            <p class="arrangement-desc">Artistic design</p>
+                        </div>
+                    </div>
+
+                    <!-- Arrangement 5: Rounded Dome -->
+                    <div class="arrangement-card" data-arrangement="dome">
+                        <div class="arrangement-preview" style="background: linear-gradient(135deg, #fff0f5 0%, #ffc0cb 100%); border: 3px solid #ff1493;">
+                            <span class="arrangement-icon">⭕</span>
+                            <p>Rounded Dome</p>
+                            <p class="arrangement-desc">Full appearance</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Page 4: Editor -->
+            <section id="editorPage" class="page">
+                <div class="page-header">
+                    <button class="back-btn" onclick="goToPage('arrangementPage')">← Back</button>
+                    <h2>Customize Your Bouquet</h2>
+                    <p class="page-description">Add personal touches to your bouquet</p>
+                </div>
+
+                <div class="editor-container">
+                    <!-- Left Side: Preview -->
+                    <div class="editor-preview">
+                        <div class="card-preview" id="cardPreview">
+                            <div class="bouquet-display" id="bouquetDisplay">
+                                <svg id="bouquetSVG" viewBox="0 0 400 500" style="width: 100%; height: 100%;">
+                                    <!-- Vase will be drawn here -->
+                                    <rect id="vaseRect" x="150" y="350" width="100" height="80" fill="#d4a574" rx="10"/>
+                                    
+                                    <!-- Flowers will be drawn here -->
+                                    <g id="flowersGroup"></g>
+                                </svg>
+                            </div>
+                            <div class="preview-text-area">
+                                <h3 id="previewTitle" class="preview-title">Your Bouquet</h3>
+                                <p id="previewMessage" class="preview-message">Add your message here...</p>
+                                <p id="previewSignature" class="preview-signature">With love</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Controls -->
+                    <div class="editor-controls">
+                        <div class="control-group">
+                            <label for="titleInput">Bouquet Title:</label>
+                            <input type="text" id="titleInput" class="input-field" placeholder="Enter bouquet title">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="messageInput">Gift Message:</label>
+                            <textarea id="messageInput" class="input-field textarea-field" placeholder="Write your message..." rows="4"></textarea>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="signatureInput">Signature:</label>
+                            <input type="text" id="signatureInput" class="input-field" placeholder="Your name or signature">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="fontSizeSlider">Text Size:</label>
+                            <div class="slider-container">
+                                <input type="range" id="fontSizeSlider" class="slider" min="12" max="24" value="16">
+                                <span id="fontSizeValue">16px</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="colorPicker">Flower Color:</label>
+                            <input type="color" id="colorPicker" class="color-input" value="#ff69b4">
+                        </div>
+
+                        <div class="button-group">
+                            <button id="downloadBtn" class="btn btn-primary">📥 Download as PNG</button>
+                            <button id="shareBtn" class="btn btn-secondary">🔗 Copy Shareable Link</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2024 Make Your Own Bouquet. Made with 💐 for flower lovers everywhere.</p>
+        </footer>
+    </div>
+
+    <!-- Audio elements for sound effects -->
+    <audio id="clickSound" preload="auto">
+        <source src="../static-styles/click.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Scripts -->
+    <script src="../scripts/app.js"></script>
+    <script src="../scripts/editor.js"></script>
+    <script src="../scripts/canvas.js"></script>
+</body>
+</html>
