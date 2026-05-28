@@ -16,6 +16,11 @@ const flowerImageDataUrls = {};
 let flowerImagesLoaded = false;
 let flowerImagesPromise = null;
 
+/* Flower position caching to prevent regeneration on text changes */
+let cachedFlowerPositions = null;
+let lastCachedArrangement = null;
+let lastCachedCount = null;
+
 /* ======================== */
 /* EDITOR INITIALIZATION */
 /* ======================== */
@@ -66,40 +71,40 @@ function setupEditorListeners() {
     const downloadBtn = document.getElementById('downloadBtn');
     const shareBtn = document.getElementById('shareBtn');
 
-    // Title input
+    // Title input - only update text preview, not SVG
     titleInput.addEventListener('input', (e) => {
         appState.bouquetTitle = e.target.value;
-        updateBouquetPreview();
+        updateTextPreview();
         playClickSound();
         saveDraft();
     });
 
-    // Message input
+    // Message input - only update text preview, not SVG
     messageInput.addEventListener('input', (e) => {
         appState.bouquetMessage = e.target.value;
-        updateBouquetPreview();
+        updateTextPreview();
         saveDraft();
     });
 
-    // Signature input
+    // Signature input - only update text preview, not SVG
     signatureInput.addEventListener('input', (e) => {
         appState.bouquetSignature = e.target.value;
-        updateBouquetPreview();
+        updateTextPreview();
         playClickSound();
         saveDraft();
     });
 
-    // Font size slider
+    // Font size slider - only update text preview, not SVG
     fontSizeSlider.addEventListener('input', (e) => {
         const fontSize = e.target.value;
         document.getElementById('fontSizeValue').textContent = fontSize + 'px';
-        updateBouquetPreview();
+        updateTextPreview();
         playClickSound();
         saveDraft();
     });
 
     // Color picker
-    // Flower count slider
+    // Flower count slider - UPDATE SVG since arrangement changed
     if (flowerCountSlider) {
         flowerCountSlider.value = appState.flowerCount;
         const cv = document.getElementById('flowerCountValue');
@@ -108,7 +113,7 @@ function setupEditorListeners() {
             const count = parseInt(e.target.value, 10);
             appState.flowerCount = count;
             if (cv) cv.textContent = count;
-            updateBouquetPreview();
+            updateBouquetSVG(); // Force SVG update since arrangement changed
             playClickSound();
             saveDraft();
         });
@@ -126,7 +131,13 @@ function setupEditorListeners() {
 /* ======================== */
 
 function updateBouquetPreview() {
-    const cardPreview = document.getElementById('cardPreview');
+    // Full update: text + SVG (used on initial load)
+    updateTextPreview();
+    updateBouquetSVG();
+}
+
+function updateTextPreview() {
+    // Only update text content and styling (no SVG regeneration)
     const previewTitle = document.getElementById('previewTitle');
     const previewMessage = document.getElementById('previewMessage');
     const previewSignature = document.getElementById('previewSignature');
@@ -142,9 +153,25 @@ function updateBouquetPreview() {
     previewTitle.style.fontSize = (fontSize * 1.5) + 'px';
     previewMessage.style.fontSize = fontSize + 'px';
     previewSignature.style.fontSize = (fontSize * 0.9) + 'px';
+}
 
-    // Draw bouquet SVG
-    drawBouquet();
+function updateBouquetSVG() {
+    // Only update SVG if arrangement or count changed
+    const arrangement = appState.selectedArrangement;
+    const count = Math.max(1, appState.flowerCount || 12);
+    
+    // Check if regeneration is needed
+    if (cachedFlowerPositions === null || 
+        lastCachedArrangement !== arrangement || 
+        lastCachedCount !== count) {
+        // Regenerate positions
+        cachedFlowerPositions = generateFlowerPositions(arrangement, count);
+        lastCachedArrangement = arrangement;
+        lastCachedCount = count;
+    }
+    
+    // Draw with cached positions
+    drawBouquetWithCachedPositions();
 }
 
 /* ======================== */
@@ -179,6 +206,45 @@ function drawBouquet() {
     // Generate flower positions based on arrangement and selected count
     const count = Math.max(1, appState.flowerCount || 12);
     const positions = generateFlowerPositions(arrangement, count);
+
+    // Draw flowers - cycle through selected flowers, each keeps its own color
+    positions.forEach((pos, index) => {
+        const selectedFlowerIndex = index % appState.selectedFlowers.length;
+        const flowerType = appState.selectedFlowers[selectedFlowerIndex];
+        const flowerInfo = flowerData[flowerType];
+        
+        const flowerElement = createFlowerElement(pos.x, pos.y, flowerInfo.color, pos.size || 22, flowerType);
+        flowersGroup.appendChild(flowerElement);
+    });
+}
+
+function drawBouquetWithCachedPositions() {
+    // Same as drawBouquet but uses cached positions instead of regenerating
+    const flowersGroup = document.getElementById('flowersGroup');
+    const vaseGroup = document.getElementById('vaseGroup');
+    
+    // Clear previous elements
+    flowersGroup.innerHTML = '';
+    vaseGroup.innerHTML = '';
+
+    // Scale the whole bouquet (vase + flowers) by 1.875x around the vase base center,
+    // keeping aspect ratio.
+    const SCALE = 1.875;
+    const CX = 200;
+    const CY = 350;
+    const transform = `translate(${CX} ${CY}) scale(${SCALE}) translate(${-CX} ${-CY})`;
+    vaseGroup.setAttribute('transform', transform);
+    flowersGroup.setAttribute('transform', transform);
+
+    // Get vase color and type
+    const vase = vaseData[appState.selectedVase];
+
+    // Create and add vase SVG
+    const vaseElement = createVaseElement(appState.selectedVase, vase.color);
+    vaseGroup.appendChild(vaseElement);
+
+    // Use cached flower positions (no regeneration)
+    const positions = cachedFlowerPositions || [];
 
     // Draw flowers - cycle through selected flowers, each keeps its own color
     positions.forEach((pos, index) => {
