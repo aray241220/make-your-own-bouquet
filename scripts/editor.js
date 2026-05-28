@@ -1,4 +1,22 @@
 /* ======================== */
+/* FLOWER IMAGE REGISTRY    */
+/* (declared first so functions defined below cannot hit a TDZ) */
+/* ======================== */
+
+const flowerImagePaths = {
+    rose: '../imgs/rose_6.png',
+    tulip: '../imgs/tulip.png',
+    sunflower: '../imgs/sunflower.png',
+    daisy: '../imgs/daisy.png',
+    lily: '../imgs/lily.png',
+    orchid: '../imgs/orchid.png'
+};
+
+const flowerImageDataUrls = {};
+let flowerImagesLoaded = false;
+let flowerImagesPromise = null;
+
+/* ======================== */
 /* EDITOR INITIALIZATION */
 /* ======================== */
 
@@ -450,19 +468,6 @@ function generateFlowerPositions(arrangement, count) {
 /* ======================== */
 /* FLOWER IMAGE LOADING     */
 /* ======================== */
-
-const flowerImagePaths = {
-    rose: '../imgs/rose_6.png',
-    tulip: '../imgs/tulip.png',
-    sunflower: '../imgs/sunflower.png',
-    daisy: '../imgs/daisy.png',
-    lily: '../imgs/lily.png',
-    orchid: '../imgs/orchid.png'
-};
-
-const flowerImageDataUrls = {};
-let flowerImagesLoaded = false;
-let flowerImagesPromise = null;
 
 function loadImageAsDataUrl(path) {
     return fetch(path)
