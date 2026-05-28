@@ -8,7 +8,8 @@ const appState = {
     selectedArrangement: null,
     bouquetTitle: 'Your Bouquet',
     bouquetMessage: '',
-    bouquetSignature: 'With love'
+    bouquetSignature: 'With love',
+    flowerCount: 12
 };
 
 const flowerData = {
@@ -52,39 +53,39 @@ const flowerData = {
 
 const vaseData = {
     classic: {
-        name: 'Classic Ceramic',
-        color: '#d4a574',
-        desc: 'Timeless elegance',
+        name: 'Kraft & Twine',
+        color: '#c9a45a',
+        desc: 'Rustic natural twine',
         shape: 'classic'
     },
     modern: {
-        name: 'Modern Minimalist',
-        color: '#f5f5f5',
-        desc: 'Sleek & simple',
+        name: 'Black Ribbon',
+        color: '#2b2b2b',
+        desc: 'Sleek & modern',
         shape: 'modern'
     },
     rustic: {
-        name: 'Rustic Glass',
-        color: '#e8f4f8',
-        desc: 'Transparent charm',
+        name: 'Burgundy Satin',
+        color: '#7a1f2b',
+        desc: 'Rich romantic',
         shape: 'rustic'
     },
     crystal: {
-        name: 'Crystal Vase',
-        color: '#f0e8ff',
-        desc: 'Sophisticated cut',
+        name: 'Lavender Silk',
+        color: '#b39ddb',
+        desc: 'Soft & elegant',
         shape: 'crystal'
     },
     vintage: {
-        name: 'Vintage Pitcher',
-        color: '#f5e6d3',
-        desc: 'Antique style',
+        name: 'Blush Pink',
+        color: '#e7a3b5',
+        desc: 'Sweet & vintage',
         shape: 'vintage'
     },
     contemporary: {
-        name: 'Contemporary Tall',
-        color: '#e0f5f5',
-        desc: 'Modern tall design',
+        name: 'Sage Green',
+        color: '#8aa67a',
+        desc: 'Earthy & fresh',
         shape: 'contemporary'
     }
 };
@@ -309,6 +310,7 @@ function checkForSharedBouquet() {
             appState.bouquetTitle = data.title;
             appState.bouquetMessage = data.message;
             appState.bouquetSignature = data.signature;
+            if (typeof data.flowerCount === 'number') appState.flowerCount = data.flowerCount;
 
             // Navigate directly to editor
             goToPage('editorPage');
@@ -330,7 +332,8 @@ function saveDraft() {
         arrangement: appState.selectedArrangement,
         title: appState.bouquetTitle,
         message: appState.bouquetMessage,
-        signature: appState.bouquetSignature
+        signature: appState.bouquetSignature,
+        flowerCount: appState.flowerCount
     };
     localStorage.setItem('bouquetDraft', JSON.stringify(draft));
 }
@@ -346,6 +349,7 @@ function loadDraft() {
             appState.bouquetTitle = data.title;
             appState.bouquetMessage = data.message;
             appState.bouquetSignature = data.signature;
+            if (typeof data.flowerCount === 'number') appState.flowerCount = data.flowerCount;
         } catch (e) {
             console.error('Error loading draft:', e);
         }
