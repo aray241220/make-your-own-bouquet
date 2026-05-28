@@ -61,7 +61,7 @@
 /* ======================== */
 
 .bouquet-display {
-    flex: 1;
+    flex: 0 0 280px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,7 +69,8 @@
     border-radius: 15px;
     padding: 1rem;
     margin-bottom: 1rem;
-    min-height: 250px;
+    min-height: 280px;
+    max-height: 300px;
 }
 
 #bouquetSVG {
@@ -100,6 +101,8 @@
     line-height: 1.5;
     margin-bottom: 0.8rem;
     min-height: 2.5rem;
+    max-height: 4rem;
+    overflow: hidden;
 }
 
 .preview-signature {

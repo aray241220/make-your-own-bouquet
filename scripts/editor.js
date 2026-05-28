@@ -371,7 +371,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + Math.cos(angle) * radius,
                     y: 250 + Math.sin(angle) * radius * 0.8,
-                    size: 25 + (i / 15) * 15
+                    size: 75 + (i / 15) * 45
                 });
             }
             break;
@@ -382,7 +382,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 180 + Math.random() * 40,
                     y: 200 + Math.random() * 120,
-                    size: 28
+                    size: 85
                 });
             }
             break;
@@ -396,7 +396,7 @@ function generateFlowerPositions(arrangement) {
                     positions.push({
                         x: 200 + (i - count / 2) * 40,
                         y: layerY,
-                        size: 28 - (layer * 2)
+                        size: 80 - (layer * 5)
                     });
                 }
             }
@@ -409,7 +409,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + side * (30 + Math.random() * 60),
                     y: 200 + Math.random() * 140,
-                    size: 26 + Math.random() * 8
+                    size: 75 + Math.random() * 25
                 });
             }
             break;
@@ -423,7 +423,7 @@ function generateFlowerPositions(arrangement) {
                 positions.push({
                     x: 200 + Math.cos(angle) * radius,
                     y: 220 + Math.sin(angle) * radius + yOffset,
-                    size: 26
+                    size: 80
                 });
             }
             break;
@@ -584,44 +584,45 @@ function createSunflower(group, color, size) {
 }
 
 function createTulip(group, color, size) {
-    // Tulip with 6 petals forming a cup shape
+    // Tulip with 6 large solid cup-shaped petals
     const petalCount = 6;
     
+    // Outer petals - large and solid
     for (let i = 0; i < petalCount; i++) {
         const angle = (i / petalCount) * Math.PI * 2;
-        const controlAngle = angle + Math.PI / petalCount;
         
-        const petalX = Math.cos(angle) * size * 0.5;
-        const petalY = Math.sin(angle) * size * 0.5 - size * 0.3;
-
-        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        petal.setAttribute('d', `M 0 ${-size * 0.6} Q ${Math.cos(controlAngle) * size * 0.4} ${-size * 0.2} ${petalX} ${petalY}`);
-        petal.setAttribute('stroke', color);
-        petal.setAttribute('stroke-width', size * 0.35);
-        petal.setAttribute('stroke-linecap', 'round');
-        petal.setAttribute('fill', 'none');
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', '0');
+        petal.setAttribute('cy', -size * 0.35);
+        petal.setAttribute('rx', size * 0.32);
+        petal.setAttribute('ry', size * 0.48);
+        petal.setAttribute('fill', color);
+        petal.setAttribute('opacity', '0.95');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
         group.appendChild(petal);
     }
 
-    // Inner petals (lighter)
+    // Inner petals (lighter shade for depth)
     for (let i = 0; i < petalCount; i++) {
         const angle = (i / petalCount) * Math.PI * 2 + Math.PI / petalCount;
-        const lightColor = shadeColor(color, 20);
+        const lightColor = shadeColor(color, 40);
         
-        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        petal.setAttribute('d', `M 0 ${-size * 0.55} Q ${Math.cos(angle) * size * 0.2} ${-size * 0.25} ${Math.cos(angle) * size * 0.3} ${-size * 0.1}`);
-        petal.setAttribute('stroke', lightColor);
-        petal.setAttribute('stroke-width', size * 0.2);
-        petal.setAttribute('stroke-linecap', 'round');
-        petal.setAttribute('fill', 'none');
+        const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        petal.setAttribute('cx', '0');
+        petal.setAttribute('cy', -size * 0.25);
+        petal.setAttribute('rx', size * 0.20);
+        petal.setAttribute('ry', size * 0.36);
+        petal.setAttribute('fill', lightColor);
+        petal.setAttribute('opacity', '0.88');
+        petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
         group.appendChild(petal);
     }
 
-    // Center
+    // Gold center
     const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     center.setAttribute('cx', '0');
     center.setAttribute('cy', '0');
-    center.setAttribute('r', size * 0.15);
+    center.setAttribute('r', size * 0.14);
     center.setAttribute('fill', '#FFD700');
     group.appendChild(center);
 }
@@ -708,48 +709,62 @@ function createLily(group, color, size) {
 }
 
 function createOrchid(group, color, size) {
-    // Orchid with unique petal arrangement
+    // Orchid with unique petal arrangement - large and prominent
     const mainColor = color;
-    const accentColor = shadeColor(color, 30);
+    const accentColor = shadeColor(color, 35);
     
-    // Top sepal
+    // Top sepal (large)
     const topSepal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
     topSepal.setAttribute('cx', '0');
-    topSepal.setAttribute('cy', -size * 0.55);
-    topSepal.setAttribute('rx', size * 0.22);
-    topSepal.setAttribute('ry', size * 0.45);
+    topSepal.setAttribute('cy', -size * 0.50);
+    topSepal.setAttribute('rx', size * 0.28);
+    topSepal.setAttribute('ry', size * 0.50);
     topSepal.setAttribute('fill', mainColor);
+    topSepal.setAttribute('opacity', '0.95');
     group.appendChild(topSepal);
 
-    // Side petals (2)
+    // Side petals (2) - large wing-like petals
     for (let i = 0; i < 2; i++) {
-        const angle = i === 0 ? -Math.PI / 2.5 : Math.PI / 2.5;
-        const petalX = Math.cos(angle) * size * 0.5;
-        const petalY = Math.sin(angle) * size * 0.35;
+        const angle = i === 0 ? -Math.PI / 2.8 : Math.PI / 2.8;
+        const petalX = Math.cos(angle) * size * 0.55;
+        const petalY = Math.sin(angle) * size * 0.35 - size * 0.1;
 
         const petal = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
         petal.setAttribute('cx', petalX);
         petal.setAttribute('cy', petalY);
-        petal.setAttribute('rx', size * 0.28);
-        petal.setAttribute('ry', size * 0.38);
+        petal.setAttribute('rx', size * 0.32);
+        petal.setAttribute('ry', size * 0.42);
         petal.setAttribute('fill', mainColor);
-        petal.setAttribute('opacity', '0.9');
+        petal.setAttribute('opacity', '0.92');
         petal.setAttribute('transform', `rotate(${angle * 180 / Math.PI})`);
         group.appendChild(petal);
     }
 
-    // Lip (labellum) - distinctive orchid feature
-    const lip = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    lip.setAttribute('d', `M ${-size * 0.25} ${size * 0.3} Q 0 ${size * 0.55} ${size * 0.25} ${size * 0.3} Q ${size * 0.15} ${size * 0.4} 0 ${size * 0.35} Q ${-size * 0.15} ${size * 0.4} ${-size * 0.25} ${size * 0.3}`);
+    // Lip (labellum) - distinctive large orchid feature
+    const lip = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    lip.setAttribute('cx', '0');
+    lip.setAttribute('cy', size * 0.45);
+    lip.setAttribute('rx', size * 0.38);
+    lip.setAttribute('ry', size * 0.35);
     lip.setAttribute('fill', accentColor);
     lip.setAttribute('opacity', '0.95');
     group.appendChild(lip);
+    
+    // Lip detail (ruffled texture)
+    const lipDetail = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    lipDetail.setAttribute('cx', '0');
+    lipDetail.setAttribute('cy', size * 0.48);
+    lipDetail.setAttribute('rx', size * 0.25);
+    lipDetail.setAttribute('ry', size * 0.20);
+    lipDetail.setAttribute('fill', shadeColor(accentColor, -15));
+    lipDetail.setAttribute('opacity', '0.8');
+    group.appendChild(lipDetail);
 
-    // Center detail
+    // Gold center
     const center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     center.setAttribute('cx', '0');
     center.setAttribute('cy', '0');
-    center.setAttribute('r', size * 0.1);
+    center.setAttribute('r', size * 0.12);
     center.setAttribute('fill', '#FFD700');
     group.appendChild(center);
 }
