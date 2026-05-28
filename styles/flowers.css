@@ -17,7 +17,299 @@
 
 .flower-card,
 .vase-card,
+.arrangement-card {/* ======================== */
+/* FLOWERS & VASES GRID */
+/* ======================== */
+
+.flowers-grid,
+.vases-grid,
+.arrangements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* ======================== */
+/* FLOWER CARD STYLES */
+/* ======================== */
+
+.flower-card,
+.vase-card,
 .arrangement-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.flower-card:hover,
+.vase-card:hover,
+.arrangement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(255, 105, 180, 0.25);
+}
+
+.flower-card:active,
+.vase-card:active,
+.arrangement-card:active {
+    transform: translateY(-4px);
+}
+
+.flower-preview,
+.vase-preview,
+.arrangement-preview {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.flower-preview::before,
+.vase-preview::before,
+.arrangement-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+/* ======================== */
+/* VASE SPECIFIC STYLES */
+/* ======================== */
+
+.vase-preview {
+    background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.vase-classic {
+    background: linear-gradient(135deg, #fff5ee 0%, #ffefd5 100%);
+}
+
+.vase-modern {
+    background: linear-gradient(135deg, #f5f5f5 0%, #efefef 100%);
+}
+
+.vase-rustic {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e0f2ff 100%);
+}
+
+.vase-crystal {
+    background: linear-gradient(135deg, #faf0ff 0%, #f5e5ff 100%);
+}
+
+.vase-vintage {
+    background: linear-gradient(135deg, #fdf5ed 0%, #f5ead9 100%);
+}
+
+.vase-contemporary {
+    background: linear-gradient(135deg, #e8f9ff 0%, #d0eff8 100%);
+}
+
+.vase-svg {
+    width: 100px;
+    height: 100px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.vase-name {
+    position: relative;
+    z-index: 1;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.vase-desc {
+    position: relative;
+    z-index: 1;
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+/* ======================== */
+/* FLOWER ICON / PHOTO STYLES */
+/* ======================== */
+
+.flower-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.flower-preview {
+    background: linear-gradient(135deg, #fff5f7 0%, #ffeef3 100%);
+}
+
+.arrangement-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.flower-name,
+.arrangement-icon {
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+.flower-name {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.flower-desc,
+.arrangement-desc {
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.arrangement-preview p {
+    position: relative;
+    z-index: 1;
+}
+
+.arrangement-preview p:first-child {
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* ======================== */
+/* CARD SELECTIONS */
+/* ======================== */
+
+.flower-card.selected .flower-preview,
+.vase-card.selected .vase-preview,
+.arrangement-card.selected .arrangement-preview {
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.6), inset 0 0 0 3px #ff69b4;
+    transform: scale(1.05);
+}
+
+.flower-card.selected,
+.vase-card.selected,
+.arrangement-card.selected {
+    transform: translateY(-8px);
+}
+
+.flower-card.selected::after,
+.vase-card.selected::after,
+.arrangement-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff69b4;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+
+/* ======================== */
+/* RESPONSIVE DESIGN */
+/* ======================== */
+
+@media (max-width: 768px) {
+    .flowers-grid,
+    .vases-grid,
+    .arrangements-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .flower-preview,
+    .vase-preview,
+    .arrangement-preview {
+        height: 150px;
+    }
+
+    .flower-icon,
+    .arrangement-icon {
+        font-size: 2rem;
+    }
+
+    .flower-name {
+        font-size: 1rem;
+    }
+
+    .vase-svg {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .flowers-grid,
+    .vases-grid,
+    .arrangements-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .flower-preview,
+    .vase-preview,
+    .arrangement-preview {
+        height: 120px;
+    }
+
+    .flower-icon,
+    .arrangement-icon {
+        font-size: 1.5rem;
+    }
+
+    .flower-name {
+        font-size: 0.85rem;
+    }
+
+    .flower-desc,
+    .arrangement-desc {
+        font-size: 0.7rem;
+    }
+
+    .vase-svg {
+        width: 60px;
+        height: 60px;
+    }
+
+    .vase-name {
+        font-size: 0.85rem;
+    }
+
+    .vase-desc {
+        font-size: 0.7rem;
+    }
+}
+
     cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 15px;

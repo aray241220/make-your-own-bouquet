@@ -23,7 +23,200 @@ body {
 }
 
 /* ======================== */
+/* HEADER STYLES *//* ======================== */
+/* MAIN STYLESHEET */
+/* ======================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ======================== */
 /* HEADER STYLES */
+/* ======================== */
+
+.app-header {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    border-bottom: 3px solid #ff1493;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.app-title {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.app-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 300;
+}
+
+/* ======================== */
+/* MAIN CONTENT */
+/* ======================== */
+
+.main-content {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 2rem 1rem;
+}
+
+/* ======================== */
+/* PAGE STYLES */
+/* ======================== */
+
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
+
+.page-header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.page-description {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* ======================== */
+/* FOOTER STYLES */
+/* ======================== */
+
+.app-footer {
+    background: linear-gradient(135deg, #f5f5f5 0%, #efefef 100%);
+    padding: 1.5rem;
+    text-align: center;
+    color: #666;
+    border-top: 1px solid #ddd;
+    margin-top: 2rem;
+}
+
+.app-footer p {
+    font-size: 0.9rem;
+}
+
+/* ======================== */
+/* RESPONSIVE DESIGN */
+/* ======================== */
+
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 1.8rem;
+    }
+
+    .app-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .page-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .page-description {
+        font-size: 0.9rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-title {
+        font-size: 1.5rem;
+    }
+
+    .app-header {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .page-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .page-header h2 {
+        font-size: 1.2rem;
+    }
+}
+
 /* ======================== */
 
 .app-header {
